@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib
 import os
+import plotly.express as px
 
 # 日本語フォント設定
 matplotlib.rcParams['font.family'] = 'sans-serif'
@@ -97,13 +98,12 @@ if len(expense_data) > 0:
     fig,ax = plt.subplots()
 
     ax.pie(
-    cat_sum,
-    labels=cat_sum.index.astype(str),
-    autopct="%1.1f%%"
+        cat_sum,
+        labels=cat_sum.index.astype(str),
+        autopct="%1.1f%%"
     )
 
     st.pyplot(fig)
-
 # 棒グラフ
 st.subheader("カテゴリ別支出")
 
@@ -155,6 +155,7 @@ st.download_button(
     file_name="kakeibo.csv",
     mime="text/csv"
 )
+
 
 
 
