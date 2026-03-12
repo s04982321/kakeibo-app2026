@@ -67,7 +67,24 @@ st.write("支出合計:",expense)
 if income > 0:
     saving_rate = (income-expense)/income*100
     st.write("貯蓄率:",f"{saving_rate:.1f}%")
+    
+# 今月の収支
+st.subheader("今月の収支")
 
+data["date"] = pd.to_datetime(data["date"])
+
+today = pd.Timestamp.today()
+this_month = data[
+    (data["date"].dt.year == today.year) &
+    (data["date"].dt.month == today.month)
+]
+
+income_m = this_month[this_month["type"]=="収入"]["amount"].sum()
+expense_m = this_month[this_month["type"]=="支出"]["amount"].sum()
+
+st.write("今月の収入:", income_m)
+st.write("今月の支出:", expense_m)
+st.write("今月の貯蓄:", income_m-expense_m)
 
 # 支出データ
 expense_data = data[data["type"]=="支出"]
@@ -155,5 +172,6 @@ st.download_button(
     file_name="kakeibo.csv",
     mime="text/csv"
 )
+
 
 
