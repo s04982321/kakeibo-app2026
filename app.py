@@ -4,13 +4,6 @@ import matplotlib.pyplot as plt
 import os
 
 plt.rcParams["font.family"] = "DejaVu Sans"
-if os.path.exists("kakeibo.csv"):
-    os.remove("kakeibo.csv")
-
-matplotlib.rcParams['font.family'] = 'sans-serif'
-matplotlib.rcParams['font.sans-serif'] = ['Yu Gothic']
-
-plt.rcParams["font.family"] = "Meiryo"
 
 st.title("家計簿アプリ")
 
@@ -159,6 +152,7 @@ st.download_button(
     file_name="kakeibo.csv",
     mime="text/csv"
 )
+
 
 
 
