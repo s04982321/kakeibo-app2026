@@ -67,6 +67,8 @@ st.write("支出合計:",expense)
 if income > 0:
     saving_rate = (income-expense)/income*100
     st.write("貯蓄率:",f"{saving_rate:.1f}%")
+else:
+    st.write("貯蓄率: 収入データがありません")
 
 
 # 支出データ
@@ -155,3 +157,4 @@ st.download_button(
     file_name="kakeibo.csv",
     mime="text/csv"
 )
+
