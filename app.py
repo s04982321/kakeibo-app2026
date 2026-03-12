@@ -1,9 +1,12 @@
-st.write("VERSION 12345")
+
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib
 import os
+
+if os.path.exists("kakeibo.csv"):
+    os.remove("kakeibo.csv")
 
 matplotlib.rcParams['font.family'] = 'sans-serif'
 matplotlib.rcParams['font.sans-serif'] = ['Yu Gothic']
@@ -157,4 +160,5 @@ st.download_button(
     file_name="kakeibo.csv",
     mime="text/csv"
 )
+
 
