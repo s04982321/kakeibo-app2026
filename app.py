@@ -24,9 +24,24 @@ st.subheader("データ入力")
 
 type_input = st.selectbox("種類",["収入","支出"])
 date = st.date_input("日付")
+
 category = st.selectbox(
     "カテゴリ",
-    ["食費","交通費","娯楽","日用品","その他"]
+    [
+        "給料",
+        "副業",
+        "食費",
+        "外食",
+        "交通費",
+        "日用品",
+        "交際費",
+        "娯楽",
+        "家賃",
+        "光熱費",
+        "通信費",
+        "医療費",
+        "その他"
+    ]
 )
 amount = st.number_input("金額",min_value=0)
 
@@ -72,8 +87,9 @@ col2.metric("支出合計", expense)
 if income > 0:
     saving_rate = (income-expense)/income*100
     st.write("貯蓄率:",f"{saving_rate:.1f}%")
+
 else:
-    st.write("貯蓄率: 収入データがありません")
+    st.write("貯蓄率: 収入データがありません")   
 
 
 # 支出データ
@@ -163,7 +179,3 @@ st.download_button(
     file_name="kakeibo.csv",
     mime="text/csv"
 )
-
-
-
-
