@@ -70,10 +70,11 @@ if income > 0:
     
 # 今月の収支
 st.subheader("今月の収支")
-if len(data) > 0:
-    data["date"] = pd.to_datetime(data["date"])
+
+data["date"] = pd.to_datetime(data["date"], errors="coerce")
 
 today = pd.Timestamp.today()
+
 this_month = data[
     (data["date"].dt.year == today.year) &
     (data["date"].dt.month == today.month)
@@ -85,7 +86,6 @@ expense_m = this_month[this_month["type"]=="支出"]["amount"].sum()
 st.write("今月の収入:", income_m)
 st.write("今月の支出:", expense_m)
 st.write("今月の貯蓄:", income_m-expense_m)
-
 # 支出データ
 expense_data = data[data["type"]=="支出"]
 
@@ -172,6 +172,7 @@ st.download_button(
     file_name="kakeibo.csv",
     mime="text/csv"
 )
+
 
 
 
