@@ -1,9 +1,10 @@
-
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib
+import japanize_matplotlib
 import os
+
 
 if os.path.exists("kakeibo.csv"):
     os.remove("kakeibo.csv")
@@ -160,5 +161,6 @@ st.download_button(
     file_name="kakeibo.csv",
     mime="text/csv"
 )
+
 
 
