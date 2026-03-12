@@ -1,3 +1,4 @@
+st.write("VERSION 12345")
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -156,3 +157,4 @@ st.download_button(
     file_name="kakeibo.csv",
     mime="text/csv"
 )
+
