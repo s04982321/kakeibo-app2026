@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 
-plt.rcParams["font.family"] = "MS Gothic"
+plt.rcParams["font.family"] = "Meiryo"
 
 st.title("家計簿アプリ")
 
@@ -47,6 +47,12 @@ data = st.session_state.data
 st.subheader("家計簿データ")
 st.write(data)
 
+if st.button("最後のデータを削除"):
+    if len(st.session_state.data) > 0:
+        st.session_state.data = st.session_state.data.iloc[:-1]
+        st.session_state.data.to_csv("kakeibo.csv", index=False)
+        st.rerun()
+
 # 収入支出
 income = data[data["type"]=="収入"]["amount"].sum()
 expense = data[data["type"]=="支出"]["amount"].sum()
@@ -56,8 +62,7 @@ st.write("支出合計:",expense)
 
 if income > 0:
 
-    saving_rate = (income-expense)/income* 100
-
+    saving_rate = (income-expense)/income*100
     st.write("貯蓄率:",f"{saving_rate:.1f}%")
 
 # 支出データ
@@ -69,7 +74,6 @@ st.subheader("支出ランキング")
 if len(expense_data) > 0:
 
     ranking = expense_data.groupby("category")["amount"].sum().sort_values(ascending=False)
-
     st.write(ranking)
 
 # 平均支出
@@ -78,7 +82,6 @@ st.subheader("平均支出")
 if len(expense_data) > 0:
 
     avg = expense_data["amount"].mean()
-
     st.write("1回あたりの平均支出:",round(avg,1))
 
 # 円グラフ
@@ -98,12 +101,12 @@ if len(expense_data) > 0:
 
     st.pyplot(fig)
 
-    st.subheader("カテゴリ別支出")
+# 棒グラフ
+st.subheader("カテゴリ別支出")
 
 if len(expense_data) > 0:
 
     cat_sum = expense_data.groupby("category")["amount"].sum()
-
     st.bar_chart(cat_sum)
 
 # AIコメント
@@ -114,7 +117,6 @@ if len(expense_data) > 0:
     cat_sum = expense_data.groupby("category")["amount"].sum()
 
     top_category = cat_sum.idxmax()
-
     top_ratio = cat_sum.max()/expense*100
 
     if top_ratio > 40:
@@ -133,14 +135,15 @@ st.subheader("月別支出")
 if len(expense_data) > 0:
 
     expense_data = expense_data.copy()
-
     expense_data["month"] = expense_data["date"].astype(str).str[:7]
 
     monthly = expense_data.groupby("month")["amount"].sum()
 
     st.line_chart(monthly)
 
+# CSVダウンロード
 st.subheader("データダウンロード")
+
 csv = data.to_csv(index=False)
 
 st.download_button(
