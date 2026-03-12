@@ -4,7 +4,9 @@ import matplotlib.pyplot as plt
 import matplotlib
 import os
 
-matplotlib.rcParams["font.family"] = "Noto Sans CJK JP"
+# 日本語フォント設定
+matplotlib.rcParams['font.family'] = 'sans-serif'
+matplotlib.rcParams['font.sans-serif'] = ['Noto Sans CJK JP', 'IPAexGothic', 'Yu Gothic', 'DejaVu Sans']
 
 st.title("家計簿アプリ")
 
@@ -153,6 +155,7 @@ st.download_button(
     file_name="kakeibo.csv",
     mime="text/csv"
 )
+
 
 
 
