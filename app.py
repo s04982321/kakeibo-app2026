@@ -10,7 +10,7 @@ st.title("家計簿アプリ")
 if "data" not in st.session_state:
 
     if os.path.exists("kakeibo.csv"):
-        st.session_state.data = pd.read_csv("kakeibo.csv")
+        st.session_state.data = pd.read_csv("kakeibo.csv", encoding="utf-8-sig")
     else:
         st.session_state.data = pd.DataFrame(
             columns=["date","type","category","amount"]
@@ -43,6 +43,7 @@ category = st.selectbox(
         "その他"
     ]
 )
+
 amount = st.number_input("金額",min_value=0)
 
 if st.button("追加"):
@@ -57,7 +58,7 @@ if st.button("追加"):
         ignore_index=True
     )
 
-    st.session_state.data.to_csv("kakeibo.csv",index=False)
+    st.session_state.data.to_csv("kakeibo.csv", index=False, encoding="utf-8-sig")
 
 
 # データ表示
@@ -71,7 +72,7 @@ st.write(data)
 if st.button("最後のデータを削除"):
     if len(st.session_state.data) > 0:
         st.session_state.data = st.session_state.data.iloc[:-1]
-        st.session_state.data.to_csv("kakeibo.csv", index=False)
+        st.session_state.data.to_csv("kakeibo.csv", index=False, encoding="utf-8-sig")
         st.rerun()
 
 
@@ -87,7 +88,6 @@ col2.metric("支出合計", expense)
 if income > 0:
     saving_rate = (income-expense)/income*100
     st.write("貯蓄率:",f"{saving_rate:.1f}%")
-
 else:
     st.write("貯蓄率: 収入データがありません")   
 
@@ -112,7 +112,7 @@ if len(expense_data) > 0:
     st.write("1回あたりの平均支出:",round(avg,1))
 
 
-# 円グラフ（Plotly版）
+# 円グラフ
 st.subheader("支出内訳")
 
 if len(expense_data) > 0:
@@ -155,6 +155,7 @@ if len(expense_data) > 0:
         else:
             st.write("支出バランスは比較的安定しています。")
 
+
 # 月別支出
 st.subheader("月別支出")
 
@@ -171,7 +172,7 @@ if len(expense_data) > 0:
 # CSVダウンロード
 st.subheader("データダウンロード")
 
-st.session_state.data.to_csv("kakeibo.csv", index=False, encoding="utf-8-sig")
+csv = data.to_csv(index=False, encoding="utf-8-sig")
 
 st.download_button(
     label="CSVダウンロード",
@@ -179,4 +180,3 @@ st.download_button(
     file_name="kakeibo.csv",
     mime="text/csv"
 )
-
